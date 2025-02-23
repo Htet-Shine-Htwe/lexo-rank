@@ -91,11 +91,13 @@ The `LexoRankTrait` is a trait that simplifies the process of managing sortable 
     ```
 
 5.  `resetPositions`
+
     - Resets the positions of all models in the table.
 
     Example:
+
     ```php
-   CustomItem::resetPositions();
+    CustomItem::resetPositions();
     ```
 
 6.  `getNewPosition($prev, $next, $isMoving = false)`
@@ -114,12 +116,12 @@ The `LexoRankTrait` is a trait that simplifies the process of managing sortable 
 
     - Retrieves models that are either before or after the current model based on the position field.
 
-10.  `getPrevious($limit = 0)`
+10. `getPrevious($limit = 0)`
+
 
     - Gets a collection of the previous models.
 
 11. `getNext($limit = 0)`
-
 
     - Gets a collection of the next models.
 
