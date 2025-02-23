@@ -5,6 +5,7 @@
         "lexorank",
         "dede"
     ],
+    "license": "MIT",
     "author" : "Htet Shine Htwe",
     "autoload": {
         "psr-4": {
