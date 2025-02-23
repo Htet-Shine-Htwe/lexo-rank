@@ -1,0 +1,73 @@
+{
+    "name": "dede/lexorank",
+    "type": "library",
+    "keywords": [
+        "lexorank",
+        "dede"
+    ],
+    "author" : "Htet Shine Htwe",
+    "autoload": {
+        "psr-4": {
+            "Dede\\Lexorank\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dede\\Lexorank\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Htet Shine Htwe",
+            "email": "htetshine.coin@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/contracts": "^10.0||^11.0",
+        "laravel/framework": "11.x-dev",
+        "spatie/laravel-package-tools": "^1.16"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.34",
+        "phpstan/phpstan": "^1.12",
+        "pestphp/pest-plugin-arch": "*",
+        "pestphp/pest-plugin-laravel": "*",
+        "orchestra/testbench": "^9.0.0||^8.22.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dede\\Lexorank\\LexorankServiceProvider"
+            ],
+            "aliases": {
+                "Lexorank": "Dede\\Lexorank\\Lexorank"
+            }
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@composer run prepare",
+        "clear": "@php vendor/bin/testbench package:purge-hydrastorage --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": [
+            "@composer run prepare",
+            "@php vendor/bin/testbench workbench:build --ansi"
+        ],
+        "start": [
+            "Composer\\Config::disableProcessTimeout",
+            "@composer run build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
