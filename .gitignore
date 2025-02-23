@@ -2,4 +2,4 @@
 .env
 composer.lock
 .phpunit.cache
-.build
+build
