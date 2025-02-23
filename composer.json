@@ -23,11 +23,12 @@
             "email": "htetshine.coin@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "require": {
-        "php": "^7.3|^8.0",
+        "php": ">=7.2.5",
         "illuminate/contracts": "^10.0||^11.0",
-        "laravel/framework": "11.x-dev",
+        "laravel/framework": "*",
         "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {
