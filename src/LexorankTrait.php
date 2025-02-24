@@ -3,13 +3,13 @@
 namespace Dede\Lexorank;
 
 use Dede\Lexorank\Services\LexoRankGenerator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 trait LexoRankTrait
 {
-    protected static $sortableField = null;
 
     /**
      * Adds position to model on creating event.
@@ -21,7 +21,7 @@ trait LexoRankTrait
                 /* @var Model $model */
                 $sortableField = static::getSortableField();
 
-                $query = static::applySortableQuery($model->newQuery());
+                $query = static::applySortableQuery($model->newQuery(),$model);
 
                 $max = $query->newQuery()->max($sortableField) ?: '`';
 
@@ -31,8 +31,15 @@ trait LexoRankTrait
             }
         );
     }
-
-    protected static function applySortableQuery($query)
+    
+    /**
+     * applySortableQuery
+     *
+     * @param  Builder $query
+     * @param  Model $model
+     * @return Builder
+     */
+    protected static function applySortableQuery(Builder $query,Model $model)
     {
         return $query;
     }
@@ -188,7 +195,7 @@ trait LexoRankTrait
      */
     public static function getSortableField()
     {
-        $sortableField = isset(static::$sortableField) ? static::$sortableField : 'position';
+        $sortableField = isset(static::$sortableField) ?: 'position';
 
         return $sortableField;
     }
