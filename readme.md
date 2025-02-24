@@ -33,11 +33,13 @@ The `LexoRankTrait` is a trait that simplifies the process of managing sortable 
     If you want to apply custom query conditions (e.g., sorting within groups like `mogou_id` or `sub_mogou_id`), you can override the `applySortableGroup` method in your model:
 
     ```php
+
+    //example custom applySortableGroup 
     protected static function applySortableGroup(QueryBuilder $query, Model $model)
     {
-        if (property_exists($model, mogou_id) && property_exists($model, sub_mogou_id)) {
-            $query->where(mogou_id, $model->mogou_id)
-                  ->where(sub_mogou_id, $model->sub_mogou_id);
+        if (property_exists($model, 'category_id') && property_exists($model, 'active')) {
+            $query->where('category_id', $x)
+                  ->where('active',1);
         }
 
         return $query;
@@ -50,7 +52,9 @@ The `LexoRankTrait` is a trait that simplifies the process of managing sortable 
 
     ```php
     Schema::table(custom_items, function (Blueprint $table) {
-        $table->string(position)->nullable();
+        $table->string('position')->nullable();
+
+        $table->index('position'); // recommend
     });
     ```
 
