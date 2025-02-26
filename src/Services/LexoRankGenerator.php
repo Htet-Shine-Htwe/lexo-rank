@@ -92,17 +92,32 @@ class LexoRankGenerator
         // If the last character is already 'z', append an 'a'
         return $rank . 'a';
     }
-
+    
+    /**
+     * mid
+     *
+     * @param  string $prev
+     * @param  string $next
+     * @return string
+     */
     private function mid(string $prev, string $next)
     {
         if (ord($prev) > ord($next)) {
-            return ($prev);
+            return $prev;
         }
 
         // Cast the result to an integer to avoid the float-to-int conversion warning
         return chr(intval((ord($prev) + ord($next)) / 2));
     }
-
+    
+    /**
+     * getChar
+     *
+     * @param string $s
+     * @param int $i
+     * @param string $defaultChar
+     * @return string
+     */
     private function getChar(string $s, int $i, string $defaultChar)
     {
          return $s[$i] ?? $defaultChar;
