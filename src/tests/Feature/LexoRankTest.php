@@ -69,6 +69,17 @@ it("reset position", function () {
 
 });
 
+it('get "aU" if C was moved za and zb', function () {
+    
+    $entityA = createAndSaveEntity();
+    $entityB = createAndSaveEntity();
+    $entityC = createAndSaveEntity();
+    
+    $entityC->moveAfter($entityA);
+
+    $this->assertEquals('aU', $entityC->position);
+});
+
 // Helper functions to reduce code duplication
 function createAndSaveEntity() {
     $entity = new LexoRankEntity();
