@@ -34,38 +34,41 @@ class LexoRankGenerator
      *
      * @return string
      */
-    public function get($isMoving = false)
+    public function get(bool $isMoving = false)
     {
-
         if ($isMoving) {
-            $rank = '';
-            $i = 0;
-    
-            while (true) {
-                $prevChar = $this->getChar($this->prev, $i, $this->minChar);
-                $nextChar = $this->getChar($this->next, $i, $this->maxChar);
-    
-                if ($prevChar === $nextChar) {
-                    $rank .= $prevChar;
-                    $i++;
-                    continue;
-                }
-    
-                $midChar = $this->mid($prevChar, $nextChar);
-                if (in_array($midChar, [$prevChar, $nextChar])) {
-                    $rank .= $prevChar;
-                    $i++;
-                    continue;
-                }
-    
-                $rank .= $midChar;
-                break;
+            return  $this->getMiddleRank();
+        }
+        return $this->incrementRank($this->prev);
+    }
+
+    public function getMiddleRank()
+    {
+        $rank = '';
+        $i = 0;
+
+        while (true) {
+            $prevChar = $this->getChar($this->prev, $i, $this->minChar);
+            $nextChar = $this->getChar($this->next, $i, $this->maxChar);
+
+            if ($prevChar === $nextChar) {
+                $rank .= $prevChar;
+                $i++;
+                continue;
             }
-    
-            return $rank;
+
+            $midChar = $this->mid($prevChar, $nextChar);
+            if (in_array($midChar, [$prevChar, $nextChar])) {
+                $rank .= $prevChar;
+                $i++;
+                continue;
+            }
+
+            $rank .= $midChar;
+            break;
         }
 
-        return $this->incrementRank($this->prev);
+        return $rank;
     }
 
     /**

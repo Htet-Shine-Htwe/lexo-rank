@@ -101,7 +101,7 @@ trait LexoRankTrait
         }
 
 
-        $this->_transaction(function () use ($entity, $sortableField, $previous, $next) {
+        $this->_transaction(function () use ($sortableField, $previous, $next) {
             $this->setAttribute($sortableField, static::getNewPosition($previous, $next, true));
             $this->save();
         });
@@ -112,7 +112,7 @@ trait LexoRankTrait
      * @param string $next
      * @return mixed
      */
-    public static function getNewPosition($prev, $next = '', $isMoving = false): string
+    public static function getNewPosition(string $prev,string $next = '',bool $isMoving = false): string
     {
         return (new LexoRankGenerator((string)$prev, (string)$next))->get($isMoving);
     }
@@ -122,7 +122,7 @@ trait LexoRankTrait
      *
      * @return QueryBuilder
      */
-    public function previous($limit = 0)
+    public function previous(int $limit = 0)
     {
         return $this->siblings(false, $limit);
     }
@@ -132,7 +132,7 @@ trait LexoRankTrait
      *
      * @return QueryBuilder
      */
-    public function next($limit = 0)
+    public function next(int $limit = 0)
     {
         return $this->siblings(true, $limit);
     }
@@ -143,7 +143,7 @@ trait LexoRankTrait
      *
      * @return QueryBuilder
      */
-    public function siblings($isNext, $limit = 0)
+    public function siblings(bool $isNext,int $limit = 0)
     {
         $sortableField = static::getSortableField();
 
@@ -168,6 +168,18 @@ trait LexoRankTrait
         $collection = $this->previous($limit)->get();
 
         return $collection->reverse();
+    }
+    
+    /**
+     * getMiddle
+     *
+     * @param  string $prev
+     * @param  string $next
+     * @return string
+     */
+    public function getMiddle(string $prev,string $next)
+    {
+        return (new LexoRankGenerator((string)$prev, (string)$next))->get(true);
     }
 
     /**
@@ -195,7 +207,7 @@ trait LexoRankTrait
      */
     public static function getSortableField()
     {
-        $sortableField = isset(static::$sortableField) ?: 'position';
+        $sortableField = isset(static::$sortableField) ? static::$sortableField : 'position';
 
         return $sortableField;
     }
