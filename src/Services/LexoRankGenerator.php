@@ -34,38 +34,41 @@ class LexoRankGenerator
      *
      * @return string
      */
-    public function get($isMoving = false)
+    public function get(bool $isMoving = false)
     {
-
         if ($isMoving) {
-            $rank = '';
-            $i = 0;
-    
-            while (true) {
-                $prevChar = $this->getChar($this->prev, $i, $this->minChar);
-                $nextChar = $this->getChar($this->next, $i, $this->maxChar);
-    
-                if ($prevChar === $nextChar) {
-                    $rank .= $prevChar;
-                    $i++;
-                    continue;
-                }
-    
-                $midChar = $this->mid($prevChar, $nextChar);
-                if (in_array($midChar, [$prevChar, $nextChar])) {
-                    $rank .= $prevChar;
-                    $i++;
-                    continue;
-                }
-    
-                $rank .= $midChar;
-                break;
+            return  $this->getMiddleRank();
+        }
+        return $this->incrementRank($this->prev);
+    }
+
+    public function getMiddleRank()
+    {
+        $rank = '';
+        $i = 0;
+
+        while (true) {
+            $prevChar = $this->getChar($this->prev, $i, $this->minChar);
+            $nextChar = $this->getChar($this->next, $i, $this->maxChar);
+
+            if ($prevChar === $nextChar) {
+                $rank .= $prevChar;
+                $i++;
+                continue;
             }
-    
-            return $rank;
+
+            $midChar = $this->mid($prevChar, $nextChar);
+            if (in_array($midChar, [$prevChar, $nextChar])) {
+                $rank .= $prevChar;
+                $i++;
+                continue;
+            }
+
+            $rank .= $midChar;
+            break;
         }
 
-        return $this->incrementRank($this->prev);
+        return $rank;
     }
 
     /**
@@ -92,17 +95,32 @@ class LexoRankGenerator
         // If the last character is already 'z', append an 'a'
         return $rank . 'a';
     }
-
+    
+    /**
+     * mid
+     *
+     * @param  string $prev
+     * @param  string $next
+     * @return string
+     */
     private function mid(string $prev, string $next)
     {
         if (ord($prev) > ord($next)) {
-            return ($prev);
+            return $prev;
         }
 
         // Cast the result to an integer to avoid the float-to-int conversion warning
         return chr(intval((ord($prev) + ord($next)) / 2));
     }
-
+    
+    /**
+     * getChar
+     *
+     * @param string $s
+     * @param int $i
+     * @param string $defaultChar
+     * @return string
+     */
     private function getChar(string $s, int $i, string $defaultChar)
     {
          return $s[$i] ?? $defaultChar;

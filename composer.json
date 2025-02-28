@@ -41,7 +41,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Dede\\Lexorank\\LexorankServiceProvider"
+                "Dede\\Lexorank\\LexoRankServiceProvider"
             ],
             "aliases": {
                 "Lexorank": "Dede\\Lexorank\\Lexorank"
